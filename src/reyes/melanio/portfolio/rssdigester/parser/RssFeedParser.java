@@ -86,3 +86,4 @@ public class RssFeedParser implements IFeedParser {
 		this.dateParser = dateParser;
 	}
 }
+

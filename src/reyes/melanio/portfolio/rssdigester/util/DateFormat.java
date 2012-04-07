@@ -16,3 +16,4 @@ public class DateFormat {
 		return simpleDateFormat.parse(dateString);
 	}
 }
+

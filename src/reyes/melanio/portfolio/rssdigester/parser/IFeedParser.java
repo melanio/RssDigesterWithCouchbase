@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdom.Document;
 
 import reyes.melanio.portfolio.rssdigester.data.FeedItem;
+import reyes.melanio.portfolio.rssdigester.util.DateParser;
 
 public interface IFeedParser {
 
@@ -14,5 +15,7 @@ public interface IFeedParser {
 
 	public List<FeedItem> parse(Document document);
 
-	// public void setDateParser(DateParser dateParser);
+	public void setDateParser(DateParser dateParser);
 }
+
+

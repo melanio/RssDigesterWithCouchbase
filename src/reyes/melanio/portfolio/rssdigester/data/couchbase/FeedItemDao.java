@@ -52,3 +52,4 @@ public class FeedItemDao {
 		this.clientUtil.getClient().shutdown(60, TimeUnit.SECONDS);
 	}
 }
+
