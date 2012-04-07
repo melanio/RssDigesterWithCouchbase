@@ -1,0 +1,18 @@
+package reyes.melanio.portfolio.rssdigester.parser;
+
+import java.util.List;
+
+import org.jdom.Document;
+
+import reyes.melanio.portfolio.rssdigester.data.FeedItem;
+
+public interface IFeedParser {
+
+	public String getFormat();
+
+	public boolean checkForamt(Document document);
+
+	public List<FeedItem> parse(Document document);
+
+	// public void setDateParser(DateParser dateParser);
+}

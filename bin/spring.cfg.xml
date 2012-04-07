@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="Feed01" class="reyes.melanio.portfolio.rssdigester.data.Feed">
+		<constructor-arg value="http://codecheese.wordpress.com/feed/"/>
+	</bean>
+	
+	<bean id="DateFormat01" class="reyes.melanio.portfolio.rssdigester.util.DateFormat">
+		<constructor-arg value="EEE, dd MMM yyyy HH:mm:ss z" />
+	</bean>
+
+	<bean id="DateFormat02" class="reyes.melanio.portfolio.rssdigester.util.DateFormat">
+		<constructor-arg value="EEE, dd MMM yy HH:mm:ss z" />
+	</bean>
+
+	<bean id="DateFormat03" class="reyes.melanio.portfolio.rssdigester.util.DateFormat">
+		<constructor-arg value="yyyy-MM-dd'T'HH:mm:ss'Z'" />
+	</bean>
+
+	<bean id="DateFormat04" class="reyes.melanio.portfolio.rssdigester.util.DateFormat">
+		<constructor-arg value="MM/dd/yy h:mm a" />
+	</bean>
+
+	<bean id="DateFormat05" class="reyes.melanio.portfolio.rssdigester.util.DateFormat">
+		<constructor-arg value="MM/dd/yy" />
+	</bean>
+	
+	<bean id="DateParserBean" class="reyes.melanio.portfolio.rssdigester.util.DateParser">
+		<property name="dateFormats">
+			<list>
+				<ref bean="DateFormat01" />
+				<ref bean="DateFormat02" />
+				<ref bean="DateFormat03" />
+				<ref bean="DateFormat04" />
+				<ref bean="DateFormat05" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="RssFeedParserBean" class="reyes.melanio.portfolio.rssdigester.parser.RssFeedParser">
+		<property name="dateParser" ref="DateParserBean" />
+	</bean>
+	
+	<bean id="AtomParserBean" class="reyes.melanio.portfolio.rssdigester.parser.AtomFeedParser">
+		<property name="dateParser" ref="DateParserBean" />
+	</bean>
+	
+	<bean id="uri01" class="java.lang.String">
+		<constructor-arg value="localhost"/>
+	</bean>
+	
+	<bean id="CouchbaseClientUtilBean" class="reyes.melanio.portfolio.rssdigester.data.couchbase.CouchbaseClientUtil">
+		<property name="uris">
+			<list>
+				<ref bean="uri01"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="FeedItemDaoBean" class="reyes.melanio.portfolio.rssdigester.data.couchbase.FeedItemDao">
+		<property name="clientUtil" ref="CouchbaseClientUtilBean"/>
+	</bean>
+
+	<bean id="RssDigesterBean" class="reyes.melanio.portfolio.rssdigester.RssDigester" >
+		<property name="parsers">
+			<list>
+				<ref bean="RssFeedParserBean"/>
+				<ref bean="AtomParserBean" />
+			</list>
+		</property>
+		<property name="feeds">
+			<list>
+				<ref bean="Feed01"/>
+			</list>
+		</property>
+		<property name="feedItemDao" ref="FeedItemDaoBean" />
+	</bean>
+
+</beans>
