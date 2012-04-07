@@ -2,7 +2,7 @@
 *~
 classes/*
 dist/*
-build/*
+bin/*
 .settings/*
 .project
 .classpath
